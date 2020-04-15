@@ -1,10 +1,21 @@
+terraform {
+  backend "s3" {
+    bucket = "dubiza-tf-state"
+    key = "global/s3/terraform.tfstate"
+    region = "us-east-1"
+
+    dynamodb_table = "dubiza_tf_locks"
+    encrypt = true
+  }
+}
+
 provider "aws" {
   region = "us-east-1"
   profile = "terraform"
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "dubiza_tf_state"
+  bucket = "dubiza-tf-state"
 
   lifecycle {
     prevent_destroy = true
